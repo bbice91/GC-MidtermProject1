@@ -36,15 +36,28 @@ namespace POS_MidtermTerm_Project1
             {
                 Console.WriteLine(message);
                 var cartItem = new CartItem();
-                int number = int.Parse(Console.ReadLine());              
+                int number = int.Parse(Console.ReadLine());                     
                 while (!products.Any(x => x.ProductID == number))
                 {
                     Console.WriteLine("That product does not exist in our amazing inventory");
                     number = int.Parse(Console.ReadLine());
                 }
+
                 cartItem.Product = CartAction.GetProductByProductId(number);
-                Console.WriteLine($"How many {cartItem.Product.Name.Trim()}s would you like?");
-                cartItem.Quantity = int.Parse(Console.ReadLine()); //user give qt
+                Console.WriteLine($"How many {cartItem.Product.Name.Trim()}s would you like?");               
+                while (true)
+                {
+                    double selectedNumber; 
+                    if  (!double.TryParse(Console.ReadLine(), out  selectedNumber))
+                    {
+                    Console.WriteLine("This is a numerical input only, please enter the corrisponding two digit number for your item.");   
+                    }
+                    else
+                    { 
+                        cartItem.Quantity = selectedNumber;
+                        break;
+                    }
+                }
                 cart.Add(cartItem);
                 Console.WriteLine("Would you like to order more items? (y/n)");
                 addMoreItems = Console.ReadLine();
@@ -83,7 +96,8 @@ namespace POS_MidtermTerm_Project1
             userPaymentMethod = Console.ReadLine().Trim().ToLower();
             while (userPaymentMethod != "cash" && userPaymentMethod != "check" && userPaymentMethod != "credit card")
                 {
-                Console.WriteLine("This is not a valid form of payment");
+                Console.Write("This is not a valid form of payment. Please try again: ");
+                userPaymentMethod = Console.ReadLine().ToLower().Trim();
                 }
             return userPaymentMethod;                
         }

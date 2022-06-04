@@ -12,14 +12,32 @@ namespace POS_MidtermTerm_Project1
         public static double GetPaidInCash(double grandTotal)
         {
             Console.WriteLine("Enter the Cash tendered");
-            double cashIn = double.Parse(Console.ReadLine());
-            while (cashIn - grandTotal < 0)
+            double cashIn;
+            while (true)
             {
-                Console.WriteLine($"${cashIn} - This isn't enough money, your total is ${grandTotal}");
-                cashIn = double.Parse(Console.ReadLine());
+                if (double.TryParse(Console.ReadLine(), out cashIn))
+                {
+                    while (cashIn - grandTotal < 0)
+                    {
+                        Console.WriteLine($"${cashIn} - This isn't enough money, your total is ${grandTotal}.");
+                        Console.WriteLine($"Please give us at least {grandTotal}.");
+
+                        if (double.TryParse(Console.ReadLine(), out cashIn) && cashIn >= grandTotal)
+                        {
+                            double cashOut = cashIn - grandTotal;
+                            return Math.Round(cashOut, 2);
+                        }
+                        else
+                        {
+                            continue;
+                        }
+                    }                
+                }
+                else
+                {                    
+                    Console.WriteLine("Enter the numerical value of the cash you want to give us");
+                }
             }
-            double cashOut = cashIn - grandTotal;
-            return Math.Round(cashOut, 2);
         }
         public static void GetPaidByCheck(double grandTotal)
         {
@@ -36,7 +54,7 @@ namespace POS_MidtermTerm_Project1
             Regex creditCardNumberPattern = new Regex(@"^\b\d{16}\b");
             while (!creditCardNumberPattern.IsMatch(Console.ReadLine()))
             {
-                Console.WriteLine("This is bad credit card number, please provide us with the correct credit card number.");
+                Console.WriteLine("This is a bad credit card number, please provide us with the correct credit card number.");
             }
 
             Console.WriteLine("What is the expiration date of your card? Format must be mm/yy.");

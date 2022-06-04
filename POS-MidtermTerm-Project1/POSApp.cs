@@ -19,18 +19,18 @@ namespace POS_MidtermTerm_Project1
                     {   
                         List<CartItem> cart = new List<CartItem>();
                         var userCart = Menu.SelectItemsForCart(Menu.ShowMenu("Here is our amazing list of delicious items!"), "Please enter the number corresponding to your food item!");
-                        Menu.ShowReceipt(userCart);                               
+                        Menu.ShowReceipt(userCart);
                         string paymentType = Menu.AskForPayment("How would you like to pay for your awesome items?");
                         GetPaymentType.PaymentType(userCart, paymentType);
                         Menu.ShowReceipt(userCart, paymentType);
-                        anotherOrder = TryValidate.GetValidation("Would you like to place another order?");
+                        anotherOrder = TryValidate.GetValidation("Would you like to place another order? (y/n)");
                     }
                     Console.WriteLine("Thank you for ordering with us, have a wonderful day!");
                     } 
                     catch (Exception ex)
                     {
-                        Console.WriteLine("How did you break our amazing Burger Hut II Point of Sale System? Pleas contact tech support at our earliest convience.");
-                        Console.WriteLine($"Here is the esception you got {ex} and we have to deal with...");
+                        Console.WriteLine("How did you break our amazing Burger Hut II Point of Sale System? Please contact tech support at our earliest convience.\n");
+                        Console.WriteLine($"Here is the esception you got {ex} and we have to deal with...\n");
              }
         }
     }
